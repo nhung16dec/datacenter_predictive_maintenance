@@ -3,7 +3,9 @@ from transform import transform_data
 from load import load_data
 from dotenv import load_dotenv
 import os
+from logger import get_logger
 
+logger = get_logger()
 load_dotenv()
 
 conn_params = {
@@ -15,7 +17,12 @@ conn_params = {
 }
 
 
-if __name__ == "__main__":   
-    df = extract_data("../../data/sensors.csv")
-    df = transform_data(df)
-    load_data(df, conn_params)
+if __name__ == "__main__":  
+    try:
+        df = extract_data("../../data/sensors.csv")
+        df = transform_data(df)
+        load_data(df, conn_params)
+        logger.info("✅ ETL Pipeline completed successfully!")
+    except Exception as e:
+        logger.error(f"ETL pipeline failed: {e}")
+

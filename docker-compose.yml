@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: datacenter_db
+    restart: always
+    environment:
+      POSTGRES_USER: invite
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: datacenter
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  etl:
+    build: .
+    container_name: etl_pipeline
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: invite
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: datacenter
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    volumes:
+      - ./data:/app/data          
+      - ./src:/app/src
+
+volumes:
+  db_data:
+

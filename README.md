@@ -13,6 +13,7 @@ A personal data engineering + ML project for predictive maintenance in data cent
 ## 🧱 Stack
 Python, Pandas, FastAPI, PostgreSQL, SQLAlchemy, Docker
 
+
 ## ⚙️ Setup
 1. Create a virtual environment
 2. Install dependencies:
