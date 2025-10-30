@@ -1,0 +1,25 @@
+# Verify with psql:
+docker exec -it datacenter_db psql -U invite -d datacenter
+
+# Download dataset NASA:
+    wget https://ti.arc.nasa.gov/c/6/
+    wget https://ti.arc.nasa.gov/c/6/data/CMAPSSData.zip
+    unzip CMAPSSData.zip
+
+# Check that all container are running
+    docker compose ps
+
+#Check ETL logs
+    docker compose logs -f etl
+
+#Test re-running ETL
+    docker compose run --rm etl
+
+#Check environment isolation
+    docker volume ls
+
+#Run Python script inside ETL container
+    docker compose run --rm etl python src/etl/test_connection.py
+
+#Verify data in PostgreSQL
+    docker exec -it datacenter_db psql -U invite -d datacenter
